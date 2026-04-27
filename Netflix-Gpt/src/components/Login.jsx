@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
 import Header from "./Header";
 import { validateData } from "../utils/ValidateForm";
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
 function Login() {
  const [isSignin, setIsSignIn] = useState(true);
  const [isMessage, setIsSetMessage] = useState("");
@@ -23,6 +24,24 @@ function Login() {
    );
   }
   setIsSetMessage(message);
+  if (message) return;
+  createUserWithEmailAndPassword(
+   auth,
+   email.current.value,
+   password.current.value,
+  )
+   .then((userCredential) => {
+    // Signed up
+    const user = userCredential.user;
+    console.log(user);
+    // ...
+   })
+   .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setIsSetMessage(errorMessage + "" + errorCode);
+    // ..
+   });
  };
  const ToggleSingInForm = () => {
   setIsSignIn(!isSignin);
