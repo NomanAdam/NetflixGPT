@@ -1,12 +1,16 @@
 import React, { useState, useRef } from "react";
 import Header from "./Header";
 import { validateData } from "../utils/ValidateForm";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+ createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 function Login() {
  const [isSignin, setIsSignIn] = useState(true);
  const [isMessage, setIsSetMessage] = useState("");
-
+ const navigate = useNavigate();
  const name = useRef(null);
  const email = useRef(null);
  const password = useRef(null);
@@ -15,7 +19,7 @@ function Login() {
   // validation
   let message;
   if (isSignin) {
-   message = validateData(email.current.value, password.current.value);
+   message = validateData("dummy", email.current.value, password.current.value);
   } else {
    message = validateData(
     name.current.value,
@@ -25,23 +29,40 @@ function Login() {
   }
   setIsSetMessage(message);
   if (message) return;
-  createUserWithEmailAndPassword(
-   auth,
-   email.current.value,
-   password.current.value,
-  )
-   .then((userCredential) => {
-    // Signed up
-    const user = userCredential.user;
-    console.log(user);
-    // ...
-   })
-   .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    setIsSetMessage(errorMessage + "" + errorCode);
-    // ..
-   });
+  if (!isSignin) {
+   createUserWithEmailAndPassword(
+    auth,
+    email.current.value,
+    password.current.value,
+   )
+    .then((userCredential) => {
+     // Signed up
+     const user = userCredential.user;
+     navigate("./browser");
+     console.log(user);
+     // ...
+    })
+    .catch((error) => {
+     const errorCode = error.code;
+     const errorMessage = error.message;
+     setIsSetMessage(errorMessage + "" + errorCode);
+     // ..
+    });
+  } else {
+   signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+    .then((userCredential) => {
+     // Signed in
+     const user = userCredential.user;
+     navigate("./browser");
+     console.log(user);
+     // ...
+    })
+    .catch((error) => {
+     const errorCode = error.code;
+     const errorMessage = error.message;
+     setIsSetMessage(errorMessage + "" + errorCode);
+    });
+  }
  };
  const ToggleSingInForm = () => {
   setIsSignIn(!isSignin);
