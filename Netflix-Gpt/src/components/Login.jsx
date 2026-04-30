@@ -4,13 +4,13 @@ import { validateData } from "../utils/ValidateForm";
 import {
  createUserWithEmailAndPassword,
  signInWithEmailAndPassword,
+ updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+
 function Login() {
  const [isSignin, setIsSignIn] = useState(true);
  const [isMessage, setIsSetMessage] = useState("");
- const navigate = useNavigate();
  const name = useRef(null);
  const email = useRef(null);
  const password = useRef(null);
@@ -35,33 +35,28 @@ function Login() {
     email.current.value,
     password.current.value,
    )
-    .then((userCredential) => {
-     // Signed up
+    .then(async (userCredential) => {
      const user = userCredential.user;
-     navigate("./browser");
-     console.log(user);
-     // ...
+
+     await updateProfile(user, {
+      displayName: name.current.value,
+     });
+
+     await auth.currentUser.reload(); // ✅ force fresh data
     })
     .catch((error) => {
-     const errorCode = error.code;
-     const errorMessage = error.message;
-     setIsSetMessage(errorMessage + "" + errorCode);
-     // ..
+     setIsSetMessage(error.message);
     });
   } else {
-   signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-    .then((userCredential) => {
-     // Signed in
-     const user = userCredential.user;
-     navigate("./browser");
-     console.log(user);
-     // ...
-    })
-    .catch((error) => {
-     const errorCode = error.code;
-     const errorMessage = error.message;
-     setIsSetMessage(errorMessage + "" + errorCode);
-    });
+   signInWithEmailAndPassword(
+    auth,
+    email.current.value,
+    password.current.value,
+   ).catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setIsSetMessage(errorMessage + "" + errorCode);
+   });
   }
  };
  const ToggleSingInForm = () => {

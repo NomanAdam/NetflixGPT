@@ -1,8 +1,23 @@
+import { signOut } from "firebase/auth";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../utils/firebase";
 
 function Browser() {
  const [dropDown, setDropDown] = useState(false);
-
+ const navigate = useNavigate();
+ const handleSignOut = () => {
+  signOut(auth)
+   .then(() => {
+    navigate("/");
+   })
+   .catch((error) => {
+    console.log(error);
+   });
+ };
+ const user = useSelector((state) => state.user);
+ console.log(user);
  return (
   <div className="flex justify-between items-center p-4 bg-linear-to-r from-black via-black/70 to-transparent">
    <img
@@ -17,12 +32,15 @@ function Browser() {
      className="h-10 w-10"
     />
 
-    <span>UserName</span>
+    <span>{user?.user?.displayName}</span>
     <button className="cursor-pointer" onClick={() => setDropDown(!dropDown)}>
      ⬇
     </button>
     {dropDown && (
-     <button className="absolute top-full right-0 mt-2 bg-black text-white px-3 py-1">
+     <button
+      className="absolute cursor-pointer top-full right-0 mt-2 bg-black text-white px-3 py-1"
+      onClick={handleSignOut}
+     >
       Sign out
      </button>
     )}
