@@ -3,9 +3,13 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
-
+import { logo, profile } from "../utils/constant";
+import { useNowPlayingMoives } from "../Hooks/useNowPlayingMoive";
+import MainContainer from "./MainContainer";
 function Browser() {
  const [dropDown, setDropDown] = useState(false);
+ const user = useSelector((state) => state.user);
+
  const navigate = useNavigate();
  const handleSignOut = () => {
   signOut(auth)
@@ -16,36 +20,31 @@ function Browser() {
     console.log(error);
    });
  };
- const user = useSelector((state) => state.user);
- console.log(user);
- return (
-  <div className="flex justify-between items-center p-4 bg-linear-to-r from-black via-black/70 to-transparent">
-   <img
-    src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production_2026-04-24/consent/87b6a5c0-0104-4e96-a291-092c11350111/019ae4b5-d8fb-7693-90ba-7a61d24a8837/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-    alt="logo"
-    className="h-10"
-   />
-   <div className="flex items-center gap-2 relative">
-    <img
-     src="https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-88wkdmjrorckekha.jpg"
-     alt="Profile"
-     className="h-10 w-10"
-    />
+ useNowPlayingMoives();
 
-    <span>{user?.user?.displayName}</span>
-    <button className="cursor-pointer" onClick={() => setDropDown(!dropDown)}>
-     ⬇
-    </button>
-    {dropDown && (
-     <button
-      className="absolute cursor-pointer top-full right-0 mt-2 bg-black text-white px-3 py-1"
-      onClick={handleSignOut}
-     >
-      Sign out
+ return (
+  <>
+   <div className="absolute top-0 left-0 z-50 w-full flex justify-between items-center p-4 bg-linear-to-b from-black/80 to-transparent">
+    <img src={logo} alt="logo" className="h-10" />
+    <div className="flex items-center gap-2 relative">
+     <img src={profile} alt="Profile" className="h-10 w-10" />
+
+     <span className="text-white">{user?.user?.displayName}</span>
+     <button className="cursor-pointer" onClick={() => setDropDown(!dropDown)}>
+      ⬇
      </button>
-    )}
+     {dropDown && (
+      <button
+       className="absolute cursor-pointer top-full right-0 mt-2 bg-black text-white px-3 py-1"
+       onClick={handleSignOut}
+      >
+       Sign out
+      </button>
+     )}
+    </div>
    </div>
-  </div>
+   <MainContainer />
+  </>
  );
 }
 

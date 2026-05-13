@@ -7,6 +7,7 @@ import {
  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { bgImg } from "../utils/constant";
 
 function Login() {
  const [isSignin, setIsSignIn] = useState(true);
@@ -68,7 +69,7 @@ function Login() {
    <Header />
    <div className="relative">
     <img
-     src="https://assets.nflxext.com/ffe/siteui/vlv3/ba53094c-3e3b-4789-94a6-baac10310f07/web/PK-en-20260420-TRIFECTA-perspective_b7c92ecc-b94e-4055-badf-6424ce6910a6_small.jpg"
+     src={bgImg}
      alt="background image"
      className="w-full h-screen object-cover"
     />
