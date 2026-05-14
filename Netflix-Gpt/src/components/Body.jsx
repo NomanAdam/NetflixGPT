@@ -18,7 +18,9 @@ function Body() {
    element: (
     <>
      <AuthHandler />
-     <Browser />
+     <div>
+      <Browser />
+     </div>
     </>
    ),
   },

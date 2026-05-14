@@ -11,3 +11,4 @@ export const options = {
   Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
  },
 };
+export const Poster_Url = "https://image.tmdb.org/t/p/w500";

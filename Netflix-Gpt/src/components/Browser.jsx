@@ -6,6 +6,7 @@ import { auth } from "../utils/firebase";
 import { logo, profile } from "../utils/constant";
 import { useNowPlayingMoives } from "../Hooks/useNowPlayingMoive";
 import MainContainer from "./MainContainer";
+import SecondaryContainer from "./SecondaryContainer";
 function Browser() {
  const [dropDown, setDropDown] = useState(false);
  const user = useSelector((state) => state.user);
@@ -25,7 +26,7 @@ function Browser() {
  return (
   <>
    <div className="absolute top-0 left-0 z-50 w-full flex justify-between items-center p-4 bg-linear-to-b from-black/80 to-transparent">
-    <img src={logo} alt="logo" className="h-10" />
+    <img src={logo} alt="logo" className="h-12 " />
     <div className="flex items-center gap-2 relative">
      <img src={profile} alt="Profile" className="h-10 w-10" />
 
@@ -44,6 +45,7 @@ function Browser() {
     </div>
    </div>
    <MainContainer />
+   <SecondaryContainer className=" mt-[100vh]" />
   </>
  );
 }
