@@ -18,7 +18,7 @@ function Body() {
    element: (
     <>
      <AuthHandler />
-     <div>
+     <div className="bg-black min-h-screen">
       <Browser />
      </div>
     </>

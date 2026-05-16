@@ -7,6 +7,7 @@ import { logo, profile } from "../utils/constant";
 import { useNowPlayingMoives } from "../Hooks/useNowPlayingMoive";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
+import { usePopularMovies } from "../Hooks/usePopularMovies";
 function Browser() {
  const [dropDown, setDropDown] = useState(false);
  const user = useSelector((state) => state.user);
@@ -22,7 +23,7 @@ function Browser() {
    });
  };
  useNowPlayingMoives();
-
+ usePopularMovies();
  return (
   <>
    <div className="absolute top-0 left-0 z-50 w-full flex justify-between items-center p-4 bg-linear-to-b from-black/80 to-transparent">
@@ -45,7 +46,7 @@ function Browser() {
     </div>
    </div>
    <MainContainer />
-   <SecondaryContainer className=" mt-[100vh]" />
+   <SecondaryContainer />
   </>
  );
 }

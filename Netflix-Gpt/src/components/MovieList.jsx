@@ -1,20 +1,13 @@
 import React from "react";
 import MovieCard from "./MovieCard";
-import { useSelector } from "react-redux";
 
-const MovieList = () => {
- const movies = useSelector((state) => state.movie.nowPlayingMovies);
- console.log(movies);
- if (!movies) return null;
-
+const MovieList = ({ title, movies }) => {
  return (
-  <div className="  text-white">
-   <div className="text-4xl mb-3 ">NowPlaying</div>
-   <div className="flex  gap-4 m-5 overflow-auto">
-    {movies.map((movie) => (
-     <div key={movie.id} className="">
-      <MovieCard poster={movie.poster_path} />
-     </div>
+  <div className=" text-white py-">
+   <div className="text-4xl mb-3 ml-5">{title}</div>
+   <div className="flex  gap-4 m-5 overflow-x-scroll hide-scrollbar">
+    {movies?.map((movie) => (
+     <MovieCard poster={movie.poster_path} key={movie.id} />
     ))}
    </div>
   </div>
