@@ -2,6 +2,7 @@ import React from "react";
 import { Poster_Url } from "../utils/constant";
 
 function MovieCard({ poster }) {
+ if (!poster) return null;
  return (
   <div className=" w-48  shrink-0 mt-4 ">
    <img

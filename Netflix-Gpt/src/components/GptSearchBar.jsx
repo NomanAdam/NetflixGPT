@@ -4,6 +4,7 @@ import { genAI } from "../utils/genAI";
 import { options } from "../utils/constant";
 import { useDispatch } from "react-redux";
 import { addSearchedMovies } from "../utils/gptSearchSlice";
+import GptMovieSuggestion from "./GptMovieSuggestion";
 
 const GptSearchBar = () => {
  const searchText = useRef(null);
