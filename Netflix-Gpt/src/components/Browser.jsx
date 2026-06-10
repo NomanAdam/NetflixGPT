@@ -11,7 +11,9 @@ import { usePopularMovies } from "../Hooks/usePopularMovies";
 import { toggleSearch } from "../utils/gptSearchSlice";
 import GptSearch from "./GptSearch";
 function Browser() {
+ const [signOutError, setSignOutError] = useState(null);
  const [dropDown, setDropDown] = useState(false);
+ const [toggleText, setToggleText] = useState(false);
  const dispatch = useDispatch();
  const user = useSelector((state) => state.user);
  const searchPage = useSelector((state) => state.search.search);
@@ -22,17 +24,27 @@ function Browser() {
     navigate("/");
    })
    .catch((error) => {
-    console.log(error);
+    console.error("Sign out error details:", error);
+
+    setSignOutError(
+     "Something went wrong while signing out. Please try again.",
+    );
+
+    setTimeout(() => {
+     setSignOutError(null);
+    }, 3000);
    });
  };
  const handleSearch = () => {
   dispatch(toggleSearch());
+  setToggleText(!toggleText);
  };
  useNowPlayingMoives();
  usePopularMovies();
 
  return (
   <>
+   <p className="text-red-500">{signOutError}</p>
    <div className="fixed top-0 left-0 z-50 w-full flex justify-between items-center p-4 bg-linear-to-b from-black to-transparent">
     <img src={logo} alt="logo" className="h-12 " />
     <div className="flex items-center gap-2 relative">
@@ -40,7 +52,7 @@ function Browser() {
       className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 cursor-pointer "
       onClick={handleSearch}
      >
-      GPT Search
+      {toggleText ? "Home" : "Search"}
      </button>
 
      <img src={profile} alt="Profile" className="h-10 w-10" />
@@ -51,11 +63,16 @@ function Browser() {
      </button>
      {dropDown && (
       <button
-       className="absolute cursor-pointer top-full right-0 mt-2 bg-black text-white px-3 py-1"
+       className="absolute cursor-pointer top-full right-0 mt-2 bg-black text-white px-3 py-1 whitespace-nowrap z-50"
        onClick={handleSignOut}
       >
        Sign out
       </button>
+     )}
+     {signOutError && (
+      <div className="fixed top-20 right-4 bg-red-600 text-white p-3 rounded shadow-lg z-[9999]">
+       {signOutError}
+      </div>
      )}
     </div>
    </div>

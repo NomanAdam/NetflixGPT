@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { bgImg } from "../utils/constant";
+import { firebaseAuthError } from "../utils/firebaseAuthError";
 
 function Login() {
  const [isSignin, setIsSignIn] = useState(true);
@@ -17,7 +18,6 @@ function Login() {
  const password = useRef(null);
 
  const handleFormData = () => {
-  // validation
   let message;
   if (isSignin) {
    message = validateData("dummy", email.current.value, password.current.value);
@@ -43,7 +43,7 @@ function Login() {
       displayName: name.current.value,
      });
 
-     await auth.currentUser.reload(); // ✅ force fresh data
+     await auth.currentUser.reload();
     })
     .catch((error) => {
      setIsSetMessage(error.message);
@@ -54,9 +54,7 @@ function Login() {
     email.current.value,
     password.current.value,
    ).catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    setIsSetMessage(errorMessage + "" + errorCode);
+    setIsSetMessage(firebaseAuthError(error));
    });
   }
  };
