@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Login";
 import AuthHandler from "../utils/AuthHandler";
 import Browser from "./Browser";
+import ProtectedRoute from "./ProtectedRoute";
 function Body() {
  const appRouter = createBrowserRouter([
   {
@@ -19,7 +20,9 @@ function Body() {
     <>
      <AuthHandler />
      <div className="bg-black min-h-screen">
-      <Browser />
+      <ProtectedRoute>
+       <Browser />
+      </ProtectedRoute>
      </div>
     </>
    ),

@@ -9,6 +9,7 @@ function AuthHandler() {
  const navigate = useNavigate();
  const dispatch = useDispatch();
 
+ // AuthHandler.jsx
  useEffect(() => {
   const unsubscribe = onAuthStateChanged(auth, (user) => {
    if (user) {
@@ -19,16 +20,15 @@ function AuthHandler() {
       displayName: user.displayName,
      }),
     );
-    navigate("/browser");
+    navigate("/browser", { replace: true }); // 👈 replace, don't push
    } else {
     dispatch(deleteUser());
-    navigate("/");
+    navigate("/", { replace: true }); // 👈 replace clears /browser from stack
    }
   });
 
   return () => unsubscribe();
  }, []);
-
  return null;
 }
 

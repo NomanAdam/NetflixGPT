@@ -8,7 +8,7 @@ function SecondaryContainer() {
  if (!movies) return null;
  return (
   <div className="bg-black ">
-   <div className="relative  -mt-40">
+   <div className="relative -mt-20 md:-mt-26 lg:-mt-38">
     <MovieList title={"Now Playing"} movies={movies.nowPlayingMovies} />
     <MovieList title={"Popular Movies"} movies={movies.popularMovies} />
    </div>

@@ -72,9 +72,6 @@ function Login() {
      className="w-full h-screen object-cover"
     />
     <div className="absolute inset-0 flex items-center justify-center top ">
-     {/*inset==> how far the element is from all edges of its parent
-      absolute inset-0  ==> Make this div cover the entire background image */}
-
      <div className="bg-black/70 p-8 rounded w-100 flex flex-col gap-4 text-white ">
       <h2 className="font-bold text-2xl">
        {" "}
