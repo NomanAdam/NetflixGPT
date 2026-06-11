@@ -1,9 +1,19 @@
-export const validateData = (name, email, password) => {
- const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
- const isNameValid = /^[a-zA-Z]+(?:[\s-'][a-zA-Z]+)*$/.test(name);
- const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password);
- if (!isNameValid) return "Invalid Name";
- if (!isEmailValid) return "Invalid Email";
- if (!isPasswordValid) return "Invalid Password";
- return null;
+export const validateData = (name, email, password, isSignin) => {
+ const errors = {};
+
+ if (!isSignin) {
+  if (!/^[a-zA-Z]+(?:[\s-'][a-zA-Z]+)*$/.test(name)) {
+   errors.name = "Name: letters only (John Doe)";
+  }
+ }
+
+ if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  errors.email = "Email: example@gmail.com";
+ }
+
+ if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password)) {
+  errors.password = "Password: 8+ chars, 1 upper, 1 lower, 1 number";
+ }
+
+ return Object.keys(errors).length ? errors : null;
 };

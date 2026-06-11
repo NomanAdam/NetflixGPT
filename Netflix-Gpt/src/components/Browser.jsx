@@ -74,7 +74,7 @@ function Browser() {
 
      {/* ✅ Fix 4: removed duplicate <p> error at top, kept only this one */}
      {signOutError && (
-      <div className="fixed top-20 right-4 bg-red-600 text-white p-3 rounded shadow-lg z-[9999]">
+      <div className="fixed top-20 right-4 bg-red-600 text-white p-3 rounded shadow-lg z-9999">
        {signOutError}
       </div>
      )}
