@@ -59,10 +59,27 @@ function Browser() {
      {/* ✅ Fix 3: user.displayName, not user?.user?.displayName */}
      <span className="hidden sm:block text-white">{user?.displayName}</span>
 
-     <button className="cursor-pointer" onClick={() => setDropDown(!dropDown)}>
+     {/* <button className="cursor-pointer" onClick={() => setDropDown(!dropDown)}>
       ⬇
+     </button> */}
+     <button
+      className="text-gray-500 hover:text-gray-700 focus:outline-none p-2 rounded-md"
+      onClick={() => setDropDown(!dropDown)}
+     >
+      <svg
+       className="h-6 w-6"
+       fill="none"
+       viewBox="0 0 24 24"
+       stroke="currentColor"
+       strokeWidth="2"
+      >
+       <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4 6h16M4 12h16M4 18h16"
+       />
+      </svg>
      </button>
-
      {dropDown && (
       <button
        className="absolute cursor-pointer top-full right-0 mt-2 bg-black text-white text-xs sm:text-base px-2 sm:px-3 py-1 whitespace-nowrap z-50 rounded"
